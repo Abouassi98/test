@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
+import 'package:test/core/presentation/providers/notifier_update.dart';
 import 'package:test/core/presentation/utils/functional.dart';
-import 'package:test/core/providers/notifier_update.dart';
 
 part 'random_color_provider.g.dart';
 
