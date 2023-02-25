@@ -1,16 +1,12 @@
-# test
+# flutter_project_template
+📖 Template for flutter projects using solid_lints, CI for tests and analysis.
 
-A new Flutter project.
+- Uses latest stable flutter
+- Repo name as your project name
+- Organization from your profile email address or default
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Usage
+1. Press "Use this template" on the menu.
+2. Fill Github form with your new repo name and press "Create repository from template"
+3. Wait for it to be created and set up action is complete. In a couple of minutes, you'll see the flutter project created in your repo once Github Actions are complete.
+4. Clone and code.
