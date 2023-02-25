@@ -8,10 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:test/core/presentation/utils/functional.dart';
 
-
-
-
-
 import 'package:test/features/Home/presentation/providers/random_color_provider.dart';
 
 /// home screen.

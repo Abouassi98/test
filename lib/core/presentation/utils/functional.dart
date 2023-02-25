@@ -10,5 +10,6 @@ export 'package:fpdart/fpdart.dart' hide State;
 
 /// A type alias for the [State] class from the `fpdart` library.
 typedef FpState<S, A> = fpdart.State<S, A>;
+
 /// value Option
 Option<T> valueToOption<T>(AsyncValue<T> v) => v.valueOrNull.toOption();

@@ -13,7 +13,6 @@ class LogProviderObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    
     log('DidUpdateProvider: [${provider.name ?? provider.runtimeType}] value: $newValue');
   }
 
@@ -24,7 +23,6 @@ class LogProviderObserver extends ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
-  
     log('ProviderDidFail: [${provider.name ?? provider.runtimeType}] error: $error stackTrace: $stackTrace');
   }
 }
