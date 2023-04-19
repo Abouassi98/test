@@ -1,34 +1,26 @@
 // ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:test/core/presentation/utils/functional.dart';
-
-import 'package:test/features/Home/presentation/providers/random_color_provider.dart';
+import '../../../../core/presentation/utils/functional.dart';
+import '../../../../core/presentation/utils/riverpod_framework.dart';
+import '../providers/random_color.dart';
 
 /// home screen.
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends ConsumerWidget {
   /// const constructor
-  const HomeScreen();
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final newColor = ref.watch(randomColorProviderProvider).toNullable();
-    final randomColor = useCallback(
-      () async {
-        final sub =
-            // ignore: no-empty-block
-            ref.listenManual(randomColorProviderProvider, (prev, value) {});
-        ref.read(randomColorProviderProvider.notifier).update(
-              (state) => Some(Random().nextInt(Colors.primaries.length)),
-            );
-        debugPrint(sub.toString());
-      },
-      [],
-    );
+    final int? newColor = ref.watch(randomColorProvider).toNullable();
+    void randomColor() async {
+      ref.listenWhile(
+        randomColorProvider,
+        (notifier) async {
+          notifier
+              .update((_) => Some(Random().nextInt(Colors.primaries.length)));
+        },
+      );
+    }
 
     ///build
     return Scaffold(
