@@ -4,10 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/presentation/providers/provider_utils.dart';
 
-
 part 'color_provider.g.dart';
-
-
 
 @riverpod
 class RandomColor extends _$RandomColor {
@@ -26,18 +23,22 @@ class RandomColor extends _$RandomColor {
     blue = Random().nextInt(256);
     state = Color.fromRGBO(red, green, blue, 1);
   }
-
-  String getHexaColor() {
-    return '#${state.value.toRadixString(16).padLeft(8, '0')}';
-  }
-
-  String getRGBColor() {
-    return 'rgb($red, $green, $blue)';
-  }
 }
-enum ColorConvertType { hexadecimal, rgb }
+
 @riverpod
-class ColorType extends _$ColorType  with NotifierUpdate{
+String getHexaColor(GetHexaColorRef ref) {
+  return '#${ref.watch(randomColorProvider).value.toRadixString(16).padLeft(8, '0')}';
+}
+
+@riverpod
+String getRGBColor(GetRGBColorRef ref) {
+  return 'rgb(${ref.watch(randomColorProvider).red}, ${ref.watch(randomColorProvider).green}, ${ref.watch(randomColorProvider).blue})';
+}
+
+enum ColorConvertType { hexadecimal, rgb }
+
+@riverpod
+class ColorType extends _$ColorType with NotifierUpdate {
   /// return initial value of provider
   @override
   ColorConvertType build() {

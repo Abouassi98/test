@@ -1,18 +1,37 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../providers/color_provider.dart';
 
-class TestTask extends ConsumerWidget {
+class TestTask extends HookConsumerWidget {
   const TestTask({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myColor = ref.watch(randomColorProvider);
-
+    final void Function(ColorConvertType)? onSelected =
+        useMemoized(() => (ColorConvertType value) {
+              switch (value) {
+                case ColorConvertType.hexadecimal:
+                  ref
+                      .watch(colorTypeProvider.notifier)
+                      .update((_) => ColorConvertType.hexadecimal);
+                  break;
+                case ColorConvertType.rgb:
+                  ref
+                      .watch(colorTypeProvider.notifier)
+                      .update((_) => ColorConvertType.rgb);
+                  break;
+              }
+            });
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: myColor == const Color.fromRGBO(255, 255, 255, 1)
+            ? Colors.red
+            : Colors.white,
         title: const Text('Randome Color Tap'),
         actions: [
           PopupMenuButton(
@@ -39,21 +58,7 @@ class TestTask extends ConsumerWidget {
                 )
               ];
             },
-            onSelected: (value) {
-              switch (value) {
-                case ColorConvertType.hexadecimal:
-                  ref
-                      .read(colorTypeProvider.notifier)
-                      .update((state) => ColorConvertType.hexadecimal);
-                  break;
-                case ColorConvertType.rgb:
-                  ref
-                      .read(colorTypeProvider.notifier)
-                      .update((state) => ColorConvertType.rgb);
-
-                  break;
-              }
-            },
+            onSelected: onSelected,
           )
         ],
       ),
@@ -62,8 +67,8 @@ class TestTask extends ConsumerWidget {
           Clipboard.setData(
             ClipboardData(
               text: ref.read(colorTypeProvider) == ColorConvertType.hexadecimal
-                  ? ref.read(randomColorProvider.notifier).getHexaColor()
-                  : ref.read(randomColorProvider.notifier).getRGBColor(),
+                  ? ref.watch(getHexaColorProvider)
+                  : ref.watch(getRGBColorProvider),
             ),
           );
           // displayed snackbar if run on web or desktop
@@ -76,11 +81,10 @@ class TestTask extends ConsumerWidget {
             );
           }
         },
-        onTap: () {
-          ref.watch(randomColorProvider.notifier).changeColor();
-        },
-        child: Container(
+        onTap: () => ref.read(randomColorProvider.notifier).changeColor(),
+        child: AnimatedContainer(
           decoration: BoxDecoration(color: myColor),
+          duration: const Duration(milliseconds: 300),
           child: const Center(
             child: Text(
               'Random Color Tap Test',

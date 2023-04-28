@@ -6,16 +6,6 @@ targets:
     auto_apply_builders: true
     builders:
       # Write your other builders' settings normally here.
-      freezed:
-        enabled: true
-        generate_for:
-          include:
-            - lib/**.dart
-      json_serializable:
-        enabled: true
-        generate_for:
-          include:
-            - lib/**.dart
       riverpod_generator:
         enabled: true
         generate_for:
